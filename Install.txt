@@ -1,6 +1,0 @@
-
-discord.py
-os
-dotenv i
-requests  
-json    
