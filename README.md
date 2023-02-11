@@ -24,9 +24,10 @@ ZAO_BOT is a simple Discord chatbot that uses the Discord API to communicate wit
 
 # Setup
 1. Clone or download the ZAO_BOT repositry.
-2. Creat a new file named ".env" in same directory as the code.
-3. in the ".env" file, store the Discord API token as a key-value : "DiSCORD_TOKEN = your_token".
-4. Run the code using the command "python3 ZAO_BOT.py".
+2. Install the python Librarys ``` pip install -r requirments.tx```
+3. Creat a new file named ".env" in same directory as the code.
+4. in the ".env" file, store the Discord API token as a key-value : "DiSCORD_TOKEN = your_token".
+5. Run the code using the command "python3 ZAO_BOT.py".
 
 # Contribution
 
