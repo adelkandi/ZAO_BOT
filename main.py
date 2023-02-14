@@ -2,7 +2,7 @@
 import discord
 import os
 from dotenv import load_dotenv
-import requests  #  Make HTTPs requists to get DATA from API 
+import requests  #  Make HTTPs requests to get DATA from API 
 import json   
 import openai 
 
@@ -28,7 +28,7 @@ def get_Joke():
 
 
 
-def get_Dav_Joke():        #function to requist text-davinci-003
+def get_Dav_Joke():        #function to request text-davinci-003
     response = openai.Completion.create(
         engine = "text-davinci-003",
         prompt = "Give me a random funny joke",
@@ -103,7 +103,7 @@ async def on_message(message):
         Joke= get_Joke()
         await message.channel.send('here is a joke: '+ Joke )
 
-    # Command To Update and Delet from user
+    # Command To Update and Delete from user
 
     # Update the Data :
     if message.content.startswith('$joke/update'):
