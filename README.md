@@ -5,10 +5,11 @@ ZAO_BOT is a simple Discord chatbot that uses the Discord API to communicate wit
 
 # Features
 1. Respond to users with a random jok from the Chuck Norris API whenever a user mentions a word from the "Words_List".
-2. Provide a random jok from the Chuck Norris API when the user types "$jk".
-3. Add a New Local Joke to the JSON data file using "$joke/update" command.
-4. Delet a local joke from the JSON data file using the "$joke/delete" command.
-5. Show the list words that trigger the bot to send a joke using the "$Word_List" command.
+2. Provide a random joke from the text-davenci-003 OpenAI API whe user types "$jk/dav"
+3. Provide a random joke from the Chuck Norris API when the user types "$jk/Norris".
+4. Add a New Local Joke to the JSON data file using "$joke/update" command.
+5. Delet a local joke from the JSON data file using the "$joke/delete" command.
+6. Show the list words that trigger the bot to send a joke using the "$Word_List" command.
 
 # Requirments
 1. A Discord account and a server.
