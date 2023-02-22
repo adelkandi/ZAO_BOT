@@ -20,15 +20,15 @@ BOT = discord.Client(intents=intents)     # make the Bot connect with Discord
 
 
 # Helper function to get a Joke from the API 
-def get_Joke():
+def get_joke():
     response = requests.get("https://api.chucknorris.io/jokes/random")  
     json_data = json.loads(response.text) # Convert the response to json file to store data
-    Joke = json_data
-    return(Joke['value'])
+    joke = json_data
+    return(joke['value'])
 
 
 
-def get_Dav_Joke():        #function to request text-davinci-003
+def get_dav_Joke():        #function to request text-davinci-003
     response = openai.Completion.create(
         engine = "text-davinci-003",
         prompt = "Give me a random funny joke",
@@ -55,7 +55,7 @@ def Update_jk(jk_message):               # Update and add new Local Jokes to jso
     else :
         Data["jk"] = [jk_message]
 
-def Delet_jk(index):            # Delete a Local Joke from json data file 
+def delet_jk(index):            # Delete a Local Joke from json data file 
     with open("Data.json","r") as file:
         Data= json.load(file)
     jk= Data["jk"]
@@ -85,12 +85,12 @@ async def on_message(message):
     # with text-davenci-003:
     if message.content.startswith('$jk/dav'):
         print("openai api key:",openai.api_key)
-        Joke = get_Dav_Joke()
+        Joke = get_dav_Joke()
         print("joke data:",Joke)
         await message.channel.send(Joke)
 
     if message.content.startswith('$jk/Norris'):
-        Joke = get_Joke()
+        Joke = get_joke()
         await message.channel.send('Here is the joke: ')
         await message.channel.send(Joke)
     
@@ -100,7 +100,7 @@ async def on_message(message):
 
     msg = message.content
     if any(word in msg for word in Data["Word_List"]):
-        Joke= get_Joke()
+        Joke= get_joke()
         await message.channel.send('here is a joke: '+ Joke )
 
     # Command To Update and Delete from user
@@ -114,7 +114,7 @@ async def on_message(message):
     # Delete a content on Data:
     if message.content.startswith('$Joke/Delete'):
         index = int(msg.split('$Joke/delete',1)[1])
-        Delet_jk(index)
+        delet_jk(index)
         jk = Data["jk"]
         await message.channel.send(jk)
 
