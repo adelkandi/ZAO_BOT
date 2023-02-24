@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 import requests  #  Make HTTPs requests to get DATA from API 
 import json   
 import openai 
+import io 
 
 
 #ZAO_BOT: 
@@ -28,19 +29,31 @@ def get_joke():
 
 
 
-def get_dav_Joke():        #function to request text-davinci-003
+def get_dav_joke():        #function to request text-davinci-003
     response = openai.Completion.create(
         engine = "text-davinci-003",
-        prompt = "Give me a random funny joke",
-        max_tokens = 50,
+        prompt = "Give me a funny joke",
+        max_tokens = 100,
         n = 1,
         stop = None,
-        temperature = 0.5,
+        temperature = 0.4,
         )
-    dav_Joke = response.choices[0].text.strip()
-    print("Joke data:",dav_Joke)   # to see on terminal and debug 
-    return dav_Joke
+    dav_joke = response.choices[0].text.strip()
+    print("Joke data:",dav_joke)   # to see on terminal and debug 
+    return dav_joke
 
+# Function to get dad jokes from the API:
+def get_dad_joke():
+    response = requests.request("Get","https://icanhazdadjoke.com/slack")
+    dad_joke = json.loads(response.content)['attachments'][0]['text']
+    return dad_joke
+
+# Function to generate dad joke image :
+def get_dadimg_joke():
+    response = requests.get("https://icanhazdadjoke.com/j/<joke_id>.png",headers={"Accept": "image/*"})
+    image_data= response.content.decode('latin-1').encode('latin-1') # to fix the error  embedded null byte
+    file2object = io.BytesIO(image_data)
+    return discord.File(file2object , filename="dad_joke.png") 
 
 
 def Update_jk(jk_message):               # Update and add new Local Jokes to json data file 
@@ -85,10 +98,11 @@ async def on_message(message):
     # with text-davenci-003:
     if message.content.startswith('$jk/dav'):
         print("openai api key:",openai.api_key)
-        Joke = get_dav_Joke()
+        Joke = get_dav_joke()
         print("joke data:",Joke)
         await message.channel.send(Joke)
 
+    # Chuck Norris jokes generator :
     if message.content.startswith('$jk/Norris'):
         Joke = get_joke()
         await message.channel.send('Here is the joke: ')
@@ -102,6 +116,16 @@ async def on_message(message):
     if any(word in msg for word in Data["Word_List"]):
         Joke= get_joke()
         await message.channel.send('here is a joke: '+ Joke )
+
+    # Dad jokes text generator :
+    if message.content.startswith("$jk/dad"):
+        Joke = get_dad_joke()
+        await message.channel.send(f"Here is the joke : {Joke}")
+
+    # Dad jokes image generator :
+    if message.content.startswith("$jk/img.dad"):
+        Joke = get_dadimg_joke()
+        await message.channel.send(file=Joke)
 
     # Command To Update and Delete from user
 
